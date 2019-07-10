@@ -60,13 +60,11 @@ namespace imageToByteConvertor
 
         static void Main(string[] args)
         {
-            ///Image newImage = Image.FromFile("shaparak.bmp");
-            //byte[] byteArray = ImageToASCII(newImage);
             string filePathPattern = @"(.*\.)(.*)";
             string newFilePathReplacePattern = @"$1h";
             if (args.Length != 1)
             {
-                Console.WriteLine("imageToByteConvertor version 1.00");
+                Console.WriteLine("imageToByteConvertor version 1.01");
                 Console.WriteLine("Usage : Convert a bitmap file ascii array of bytes");
                 Console.WriteLine("Format: imageToByteConvertor filepath");
                 return;
