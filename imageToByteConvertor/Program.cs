@@ -60,22 +60,23 @@ namespace imageToByteConvertor
 
         static void Main(string[] args)
         {
-            string filePathPattern = @"(.*\.)(.*)";
-            string newFilePathReplacePattern = @"$1h";
             if (args.Length != 1)
             {
-                Console.WriteLine("imageToByteConvertor version 1.01");
-                Console.WriteLine("Usage : Convert a bitmap file ascii array of bytes");
+                Console.WriteLine("imageToByteConvertor version 1.02");
+                Console.WriteLine("Usage : Convert a bitmap file into ascii array of bytes");
                 Console.WriteLine("Format: imageToByteConvertor filepath");
                 return;
             }
             Image newImage = Image.FromFile(args[0]);
             byte[] byteArray = ImageToASCII(newImage);
-
-            var headerfile = Regex.Replace(args[0], filePathPattern, newFilePathReplacePattern);
-            using (StreamWriter header = new StreamWriter(headerfile, false))
+            if (byteArray != null)
             {
-                header.WriteLine("const unsigned char logo [] = {");
+                string filePathPattern = @"(.*\.)(.*)";
+                string newFilePathReplacePattern = @"$1h";
+                var headerfile = Regex.Replace(args[0], filePathPattern, newFilePathReplacePattern);
+                using (StreamWriter header = new StreamWriter(headerfile, false))
+                {
+                    header.WriteLine("const unsigned char logo [] = {");
                     int i = 1;
                     foreach (var eachbyte in byteArray)
                     {
@@ -90,6 +91,7 @@ namespace imageToByteConvertor
                         i++;
                     }
                     header.WriteLine("};");
+                }
             }
             //PrintByteArrayOnConsole(byteArray);
         }
